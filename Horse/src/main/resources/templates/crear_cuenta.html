@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crear Cuenta</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #F2EFE3;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        /* Estilo del contenedor de registro */
+        .contenedor-registro {
+            background-color: #E3D4A6;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+        }
+
+        /* Título */
+        h1 {
+            font-size: 2.5rem;
+            color: #4A3C1E;
+            margin-bottom: 20px;
+            font-family: 'Georgia', serif;
+            text-align: center;
+        }
+
+        /* Logo en círculo */
+        #logo {
+            width: 100px;
+            height: 100px;
+            margin: 5px;
+            border-radius: 50%;
+            overflow: hidden;
+            object-fit: cover;
+        }
+
+        /* Formulario */
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Estilo de los campos de entrada */
+        input[type="text"], input[type="password"] {
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #C5B490;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        /* Estilo de todos los botones */
+        button {
+            width: 100%;
+            background-color: #795548;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 5px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        button:hover {
+            background-color: #5D4037;
+        }
+
+        /* Color específico para Google y Facebook */
+        .social-label {
+            background-color: #DB4437;
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+            text-align: left;
+            font-weight: bold;
+            color: #4A3C1E;
+        }
+
+        #facebookButton {
+            background-color: #4267B2;
+        }
+
+        #facebookButton:hover {
+            background-color: #365899;
+        }
+
+        /* Mensaje de error */
+        .error-message {
+            color: red;
+            display: none;
+            margin-top: 10px;
+        }
+
+        /* Mensaje de éxito */
+        .success-message {
+            color: green;
+            display: none;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="contenedor-registro">
+        <h1>Crear Cuenta</h1>
+        <img src="logoApp.png" alt="Logo" id="logo">
+        <form id="registerForm">
+            <input type="text" name="nombre" placeholder="Nombre Completo" required>
+            <input type="text" name="email" placeholder="Correo Electrónico" required>
+            <input type="password" name="password" placeholder="Contraseña" required>
+            <input type="password" name="confirmPassword" placeholder="Confirmar Contraseña" required>
+            <button type="submit">Registrarse</button>
+
+           
+        </form>
+
+        <!-- Mensajes de error o éxito -->
+        <div class="error-message" id="errorMessage">Las contraseñas no coinciden</div>
+        <div class="success-message" id="successMessage">¡Registro exitoso!</div>
+    </div>
+
+    <script>
+        const form = document.getElementById("registerForm");
+        const errorMessage = document.getElementById("errorMessage");
+        const successMessage = document.getElementById("successMessage");
+
+        form.addEventListener("submit", function(event) {
+            event.preventDefault();
+            const password = form.password.value;
+            const confirmPassword = form.confirmPassword.value;
+
+            if (password !== confirmPassword) {
+                errorMessage.style.display = "block";
+                successMessage.style.display = "none";
+            } else {
+                errorMessage.style.display = "none";
+                successMessage.style.display = "block";
+            }
+        });
+    </script>
+</body>
+</html>

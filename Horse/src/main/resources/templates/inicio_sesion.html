@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio de sesión</title>
+    <link rel="icon" href="logoApp.png" type="image/x-icon">
+    <link rel="shortcut icon" href="logoApp.png" type="image/x-icon">
+
+    <link  rel="stylesheet" href="crearCuenta.css">
+    <style>
+         /* Estilo del cuerpo y fondo */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #F2EFE3;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        /* Estilo del contenedor de registro */
+        .contenedor-registro {
+            background-color: #E3D4A6;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+        }
+
+        /* Título */
+        h1 {
+            font-size: 2.5rem;
+            color: #4A3C1E;
+            margin-bottom: 20px;
+            font-family: 'Georgia', serif;
+            text-align: center;
+        }
+
+        /* Logo en círculo */
+        #logo {
+            width: 100px;
+            height: 100px;
+            margin: 5px;
+            border-radius: 50%;
+            overflow: hidden;
+            object-fit: cover;
+        }
+
+        /* Formulario */
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Estilo de los campos de entrada */
+        input[type="text"], input[type="password"] {
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #C5B490;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        /* Estilo de todos los botones (registro, Google, Facebook) */
+        button, .facebook-button, .social-buttons button {
+            width: 100%; /* Hace que todos los botones ocupen el 100% del contenedor */
+            background-color: #795548; /* Color base para todos los botones */
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 5px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        /* Botones al hacer hover */
+        button:hover, .facebook-button:hover, .social-buttons button:hover {
+            background-color: #5D4037;
+        }
+
+        /* Color específico para Google y Facebook */
+        #social-label {
+            background-color: #DB4437; /* Color de Google */
+        }
+
+        #facebookButton {
+            background-color: #4267B2; /* Color de Facebook */
+        }
+
+        /* Mensaje de error */
+        .error-message {
+            color: red;
+            display: none;
+            margin-top: 10px;
+        }
+
+        /* Mensaje de éxito */
+        .success-message {
+            color: green;
+            display: none;
+            margin-top: 10px;
+        }
+
+        /* Fondo adicional relacionado con caballos */
+        .background-imagen {
+            background-image: url('https://example.com/fondo-caballo.jpg');
+            background-size: cover;
+            background-position: center;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.2;
+        }
+
+        .social-label {
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+            text-align: left;
+            font-weight: bold;
+            color: #4A3C1E;
+        }
+    </style>
+</head>
+<body>
+    <div class="background-imagen"></div>
+
+    <div class="contenedor-registro">
+        <h1>HorseTour</h1>
+
+        <img id="logo" src="logoApp.png">
+
+        <form id="loginForm">
+            <label for="usuario">Usuario</label>
+            <input type="text" id="usuario" name="usuario" placeholder="Ingresa tu usuario" required>
+    
+            <label for="contraseña">Contraseña</label>
+            <input type="password" id="contraseña" name="contraseña" placeholder="Ingresa tu contraseña" required>
+    
+            <button type="submit">Iniciar Sesión</button>
+    
+            <p class="error-message" id="errorMessage">Usuario o contraseña incorrectos</p>
+        </form>
+        <script>
+            document.getElementById('loginForm').addEventListener('submit', function(event) {
+                event.preventDefault(); // Evita que el formulario se envíe
+        
+                // Obtener los valores ingresados
+                const usuario = document.getElementById('usuario').value;
+                const contraseña = document.getElementById('contraseña').value;
+        
+                // Verificar si el usuario y la contraseña coinciden
+                if (usuario === "ximena" && contraseña === "1234") {
+                    alert("Inicio de sesión exitoso. Bienvenida, " + usuario + "!");
+                    window.location.href = "reservar"; // Redirigir a otra página de inicio
+                } else {
+                    document.getElementById('errorMessage').style.display = 'block'; // Mostrar mensaje de error
+                }
+            });
+        </script>
+        
+        <!-- Botones para iniciar sesión con Google y Facebook -->
+        <div class="social-buttons">
+            <!-- Etiqueta y botón para Google -->
+            <label class="social-label" for="google"></label>
+            <button  id="social-label">Google</button> 
+            <script>
+                document.getElementById("social-label").onclick = function () {
+                  window.location.href = "https://www.google.com/intl/es-419/gmail/about/";
+                };
+              </script>
+            
+            
+
+            <!-- Etiqueta y botón para Facebook -->
+            <label class="social-label" for="facebook"></label>
+            <!-- <button class="facebook-button" id="facebook">Facebook</button>
+            <a href="https://www.facebook.com/?locale=es_LA">Facebook</a>
+         -->
+
+         <button id="facebookButton" class="facebook-button"> Facebook</button>
+
+<script>
+  document.getElementById("facebookButton").onclick = function () {
+    window.location.href = "https://www.facebook.com/?locale=es_LA";
+  };
+</script>
+
+        
+        </div>
+
+
+        <script>
+            // Función para guardar el usuario en Local Storage
+            function guardarUsuario(correo, contraseña) {
+                // Verifica si ya existe un usuario con el mismo correo
+                if (localStorage.getItem(correo)) {
+                    return false; // El usuario ya existe
+                } else {
+                    // Almacena el correo y contraseña en Local Storage
+                    localStorage.setItem(correo, contraseña);
+                    return true; // Usuario guardado con éxito
+                }
+            }
+
+            // Validar el formulario
+            document.getElementById('registerForm').addEventListener('submit', function(event) {
+                event.preventDefault(); // Evita que el formulario se envíe automáticamente
+
+                // Obtener los valores ingresados
+                const correo = document.getElementById('correo').value;
+                const nuevaContraseña = document.getElementById('nuevaContraseña').value;
+
+                // Verificar que no estén vacíos
+                if (correo && nuevaContraseña) {
+                    // Guardar el usuario en el almacenamiento local
+                    const guardado = guardarUsuario(correo, nuevaContraseña);
+
+                    if (guardado) {
+                        // Mostrar mensaje de éxito
+                        document.getElementById('successMessage').style.display = 'block';
+                        document.getElementById('errorMessage').style.display = 'none';
+                        alert("¡Cuenta creada con éxito! Correo: " + correo);
+
+                        // Redirigir al login después de crear la cuenta
+                        window.location.href = "reservar";
+                    } else {
+                        // Mostrar mensaje de error si el usuario ya existe
+                        document.getElementById('errorMessage').textContent = "El correo ya está registrado. Por favor, elige otro.";
+                        document.getElementById('errorMessage').style.display = 'block';
+                        document.getElementById('successMessage').style.display = 'none';
+                    }
+                } else {
+                    // Mostrar mensaje de error si los campos están vacíos
+                    document.getElementById('errorMessage').style.display = 'block';
+                    document.getElementById('successMessage').style.display = 'none';
+                }
+            });
+        </script>
+        
+            <p>¿No tienes cuenta? <a href="/crear_cuenta">Regístrate aquí</a></p>
+            <p><a href="#">¿Olvidaste tu contraseña?</a></p>
+        
+
+    </div>
+</body>
+</html>

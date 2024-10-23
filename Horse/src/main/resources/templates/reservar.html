@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reservar</title>
+    <link rel="icon" href="logoApp.png" type="image/x-icon">
+    <link rel="shortcut icon" href="logoApp.png" type="image/x-icon">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #FAF3E0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            width: 80%;
+            max-width: 700px;
+            padding: 30px;
+            background-color: #FFF7E1;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+        }
+
+        h1, h2, h3 {
+            color: #4A3C1E;
+        }
+
+        .detalle-ruta {
+            margin-bottom: 40px;
+        }
+
+        .detalle-ruta h2 {
+            margin-top: 0;
+            border-bottom: 2px solid #FFD384;
+            padding-bottom: 10px;
+        }
+
+        .detalle-ruta p, .detalle-ruta ul {
+            color: #333;
+        }
+
+        .detalle-ruta ul {
+            padding-left: 20px;
+            list-style-type: circle;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #4A3C1E;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+            background-color: #FFFDF6;
+        }
+
+        .btn-reservar {
+            background-color: #FF6B6B;
+            color: white;
+            border: none;
+            padding: 15px;
+            cursor: pointer;
+            font-size: 18px;
+            border-radius: 5px;
+            width: 100%;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        .btn-reservar:hover {
+            background-color: #FF8B3D;
+            transform: translateY(-2px);
+        }
+
+        .precio {
+            font-size: 20px;
+            color: #D2691E;
+            font-weight: bold;
+        }
+
+        /* Estilos del pop-up */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+            width: 80%;
+            max-width: 400px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .close-btn {
+            background-color: #4A3C1E;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .close-btn:hover {
+            background-color: #FFA500;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Reserva de Ruta</h1>
+
+    <!-- Sección de Detalles de la Ruta -->
+    <div class="detalle-ruta">
+        <h2>Detalles de la Ruta Seleccionada</h2>
+        <h3 id="ruta-nombre"></h3>
+        <p><strong>Duración:</strong> <span id="ruta-duracion"></span></p>
+        <p><strong>Dificultad:</strong> <span id="ruta-dificultad"></span></p>
+        <p><strong>Descripción:</strong> <span id="ruta-descripcion"></span></p>
+        <p><strong>Incluye:</strong></p>
+        <ul id="ruta-incluye"></ul>
+        <p><strong>Horarios:</strong> <span id="ruta-horarios"></span></p>
+        <p class="precio">Precio: $<span id="ruta-precio"></span> COP</p>
+    </div>
+
+    <!-- Formulario de Reserva -->
+    <h2>Formulario de Reserva</h2>
+    <form id="reserva-form">
+        <div class="form-group">
+            <label for="nombre">Nombre completo</label>
+            <input type="text" id="nombre" name="nombre" placeholder="Tu nombre completo" required>
+        </div>
+
+        <div class="form-group">
+            <label for="email">Correo electrónico</label>
+            <input type="email" id="email" name="email" placeholder="Tu correo electrónico" required>
+        </div>
+
+        <div class="form-group">
+            <label for="telefono">Teléfono</label>
+            <input type="tel" id="telefono" name="telefono" placeholder="Tu número de teléfono" required>
+        </div>
+
+        <div class="form-group">
+            <label for="personas">Número de personas</label>
+            <input type="number" id="personas" name="personas" min="1" value="1" required>
+        </div>
+
+        <div class="form-group">
+            <label for="horario">Horario</label>
+            <select id="horario" name="horario" required></select>
+        </div>
+
+        <button type="submit" class="btn-reservar">CONFIRMAR RESERVA</button>
+    </form>
+</div>
+
+<!-- Modal de confirmación -->
+<div id="modal" class="modal">
+    <div class="modal-content">
+        <h2>¡Confirmación exitosa!</h2>
+        <p id="reserva-info"></p>
+        <button class="close-btn" id="close-modal">Cerrar</button>
+    </div>
+</div>
+
+<script>
+    // Obtener los datos de la ruta seleccionada del localStorage
+    const rutaSeleccionada = JSON.parse(localStorage.getItem("rutaSeleccionada"));
+
+    // Mostrar los detalles de la ruta en la página
+    if (rutaSeleccionada) {
+        document.getElementById("ruta-nombre").textContent = rutaSeleccionada.nombre;
+        document.getElementById("ruta-duracion").textContent = rutaSeleccionada.duracion;
+        document.getElementById("ruta-dificultad").textContent = rutaSeleccionada.dificultad;
+        document.getElementById("ruta-descripcion").textContent = rutaSeleccionada.descripcion;
+        document.getElementById("ruta-precio").textContent = rutaSeleccionada.precio.toLocaleString();
+
+        const incluyeList = document.getElementById("ruta-incluye");
+        rutaSeleccionada.incluye.forEach(item => {
+            const li = document.createElement("li");
+            li.textContent = item;
+            incluyeList.appendChild(li);
+        });
+
+        const horariosSelect = document.getElementById("horario");
+        rutaSeleccionada.horarios.split(",").forEach(horario => {
+            const option = document.createElement("option");
+            option.value = horario.trim();
+            option.textContent = horario.trim();
+            horariosSelect.appendChild(option);
+        });
+    }
+
+    // Manejar el envío del formulario
+    document.getElementById("reserva-form").addEventListener("submit", function(event) {
+        event.preventDefault();
+        // Recopilar datos del formulario
+        const nombre = document.getElementById("nombre").value;
+        const email = document.getElementById("email").value;
+        const telefono = document.getElementById("telefono").value;
+        const personas = document.getElementById("personas").value;
+        const horario = document.getElementById("horario").value;
+
+        // Mostrar el pop-up con los detalles de la reserva
+        const reservaInfo = `
+            Ruta: ${rutaSeleccionada.nombre}<br>
+            Nombre: ${nombre}<br>
+            Personas: ${personas}<br>
+            Horario: ${horario}<br>
+        `;
+        document.getElementById("reserva-info").innerHTML = reservaInfo;
+        document.getElementById("modal").style.display = "flex";
+
+        // Limpiar el formulario
+        document.getElementById("reserva-form").reset();
+        localStorage.removeItem("rutaSeleccionada");
+    });
+
+    // Cerrar el pop-up al hacer clic en el botón "Cerrar"
+    document.getElementById("close-modal").addEventListener("click", function() {
+        document.getElementById("modal").style.display = "none";
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pura Sangre</title>
+    <link rel="icon" href="logoApp.png" type="image/x-icon">
+    <link rel="shortcut icon" href="logoApp.png" type="image/x-icon">
+
+    <style>
+        /* Estilos generales del cuerpo */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+
+        /* Contenedor principal */
+        .container {
+            display: flex;
+            max-width: 1200px;
+            margin: 50px auto;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        /* Estilo de la sección de información */
+        .info {
+            flex: 70%;
+            background-color: #fff;
+            padding: 40px;
+            box-sizing: border-box;
+        }
+
+        /* Encabezados */
+        h1, h2, h3 {
+            color: #4A3C1E;
+            font-family: 'Georgia', serif;
+        }
+
+        /* Detalles de los elementos */
+        .detalle-item {
+            margin-bottom: 30px;
+        }
+
+        /* Lista de detalles */
+        ul {
+            list-style-type: disc;
+            padding-left: 20px;
+        }
+
+        ul li {
+            margin-bottom: 10px;
+        }
+
+        /* Imagen del caballo */
+        .img-detalle {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Sección de reserva */
+        .reserva {
+            flex: 30%;
+            background-color: #F4F4F4;
+            padding: 40px;
+            border-left: 1px solid #ddd;
+            box-sizing: border-box;
+            text-align: center;
+        }
+
+        /* Encabezado de la sección de reserva */
+        .reserva h2 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+        }
+
+        /* Estilo del botón de selección */
+        .btn-seleccionar {
+            background-color: #4A3C1E;
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        /* Hover del botón */
+        .btn-seleccionar:hover {
+            background-color: #FFA500;
+        }
+
+        /* Bordes y sombras del contenedor */
+        .container, .reserva {
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Imagen del caballo dentro de la reserva */
+        .img-reserva {
+            max-width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- Información de la Ruta/Caballo -->
+    <div class="info">
+        <h1>Detalles del Caballo</h1>
+        <img class="img-detalle" src="pura_sangre.png" alt="Caballo Pura Sangre">
+        <img class="img-reserva" src="pura sangre.png" alt="Caballo para reserva">
+
+        <div class="detalle-item">
+            <h2>Caballo Pura Sangre</h2>
+            <p><strong>Raza:</strong> Pura Sangre</p>
+            <p><strong>Precio:</strong> $350.000 COP</p>
+            <h3>Edad: 5 años</h3>
+            <p>Sumérgete en una increíble experiencia montañosa acompañado de los mejores caballos. Ideal para los amantes de los retos y de la naturaleza.</p>
+        </div>
+
+        <div class="detalle-item">
+            <h3>Incluye:</h3>
+            <ul>
+                <li>Guía especializado</li>
+                <li>Caballo con equipamiento</li>
+                <li>Agua y snacks</li>
+            </ul>
+        </div>
+
+        <div class="detalle-item">
+            <h3>Horarios Disponibles:</h3>
+            <p>9:00 am, 11:00 am, 3:00 pm</p>
+        </div>
+    </div>
+
+    <!-- Información de la reserva -->
+    <div class="reserva">
+        <h2>Reserva tu lugar</h2>
+        <p><strong>Precio:</strong> $239.000 COP por persona</p>
+        <p>Salida con mínimo 3 personas por tour compartido.</p>
+        <p>Disponibilidad: Todos los días de lunes a sábado.</p>
+        <img class="img-reserva" src="pura_sangre.png" alt="Caballo para reserva">
+        
+        <button class="btn-seleccionar" onclick="seleccionar()">SELECCIONAR</button>
+    </div>
+</div>
+
+<script>
+    function seleccionar() {
+        // Redirige al carrito con los datos seleccionados (puedes usar parámetros en la URL o localStorage)
+        window.location.href = `/carrito.html?caballo=Zeus&ruta=Montaña&precio=239000`;
+    }
+</script>
+
+</body>
+</html>

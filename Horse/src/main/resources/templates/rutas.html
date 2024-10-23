@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Explorar Rutas - HorseTour</title>
+    <link rel="stylesheet" href="/static/styles.css"> <!-- Ruta hacia tu archivo CSS -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+/* Color del encabezado*/
+        header {
+             background-color: #E3D4A6;
+            color: white;
+            padding: 15px 20px;
+            text-align: center;
+        }
+
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav ul li {
+            display: inline;
+            margin-right: 20px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            padding: 20px;
+        }
+
+        .rutas-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .ruta-card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin: 15px;
+            width: 300px;
+            text-align: center;
+        }
+
+        .ruta-card img {
+            width: 100%;
+            border-radius: 8px 8px 0 0;
+        }
+
+        .ruta-card h3 {
+            color: #4CAF50;
+            padding: 10px 0;
+        }
+
+        .ruta-card p {
+            padding: 0 20px;
+            color: #666;
+        }
+
+        .ruta-card .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            margin: 10px 0;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+        }
+
+        .ruta-card .btn:hover {
+            background-color: #45a049;
+        }
+
+        .mapa-container {
+            margin: 20px auto;
+            width: 80%;
+            text-align: center;
+        }
+
+        .mapa-container img {
+            width: 100%;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav>
+            <div class="logo">HorseTour</div>
+            <ul>
+                <li><a href="/">Inicio</a></li>
+                <li><a href="/inicio_sesion">Iniciar Sesión</a></li>
+                <li><a href="/explorar_rutas">Explorar Rutas</a></li>
+                <li><a href="#">Reservar Caballos</a></li>
+                <li><a href="#">Contactar</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <h1>Explora nuestras rutas disponibles</h1>
+
+    <div class="rutas-container">
+
+        <div class="ruta-card">
+            <img src="intermedia1.png" alt="Ruta Fácil">
+            <h3>Ruta Fácil</h3>
+            <p>Ideal para principiantes. Disfruta de un paseo tranquilo por el campo. Duración: 1 hora.</p>
+            <a href="ruta_facil.html" class="btn">Ver más</a> <!-- Link a la página de detalles de la Ruta Fácil -->
+        </div>
+
+        <div class="ruta-card">
+            <img src="intermedia.png" alt="Ruta Intermedia">
+            <h3>Ruta Intermedia</h3>
+            <p>Para jinetes con algo de experiencia. Recorrido por senderos montañosos. Duración: 2 horas.</p>
+            <a href="ruta_intermedia.html" class="btn">Ver más</a> <!-- Link a la página de detalles de la Ruta Intermedia -->
+        </div>
+
+        <div class="ruta-card">
+            <img src="otra facil.png" alt="Ruta Difícil">
+            <h3>Ruta Difícil</h3>
+            <p>Ruta desafiante para expertos. Aventúrate por terrenos más complicados. Duración: 3 horas.</p>
+            <a href="/ruta_facil.html" class="btn">Ver más</a> <!-- Link a la página de detalles de la Ruta Difícil -->
+        </div>
+
+    </div>
+
+    <div class="mapa-container">
+        <h2>Mapa de rutas</h2>
+        <!-- Aquí puedes integrar un mapa interactivo o imagen de mapa estática -->
+        <img src="ruta_mapa.png" alt="Mapa de Rutas">
+    </div>
+
+</body>
+</html>
