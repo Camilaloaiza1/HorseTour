@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reservar</title>
+    <link rel="icon" href="logoApp.png" type="image/x-icon">
+    <link rel="shortcut icon" href="logoApp.png" type="image/x-icon">
+    <style>
+        /* Estilos generales */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #0093E9 0%, #80D0C7 100%);
+            color: #333;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            width: 100%;
+            max-width: 600px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+
+        h1, h2 {
+            color: #005e9e;
+            margin-bottom: 10px;
+        }
+
+        /* Estilos de detalles de la ruta */
+        .detalle-ruta {
+            background-color: #f7f7f7;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: inset 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .precio {
+            color: #E67E22;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        /* Estilos del formulario */
+        .form-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        label {
+            font-weight: bold;
+            color: #333;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        input[type="number"],
+        select {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            font-size: 16px;
+            transition: border 0.3s;
+        }
+
+        input:focus,
+        select:focus {
+            border-color: #0093E9;
+            outline: none;
+        }
+
+        .btn-reservar {
+            width: 100%;
+            padding: 12px;
+            background-color: #005e9e;
+            border: none;
+            color: #fff;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .btn-reservar:hover {
+            background-color: #007bbd;
+        }
+
+        /* Estilos del modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            width: 80%;
+            max-width: 400px;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .modal-content h2 {
+            color: #005e9e;
+        }
+
+        .close-btn {
+            background-color: #E67E22;
+            border: none;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background-color 0.3s;
+        }
+
+        .close-btn:hover {
+            background-color: #d35f17;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Reserva de Ruta</h1>
+    <!-- Sección de Detalles de la Ruta Seleccionada -->
+    <div class="detalle-ruta">
+        <h2>Detalles de la Ruta Seleccionada</h2>
+        <h3 id="ruta-nombre"></h3>
+        <p><strong>Duración:</strong> <span id="ruta-duracion"></span></p>
+        <p><strong>Dificultad:</strong> <span id="ruta-dificultad"></span></p>
+        <p><strong>Descripción:</strong> <span id="ruta-descripcion"></span></p>
+        <p><strong>Incluye:</strong></p>
+        <ul id="ruta-incluye"></ul>
+        <p><strong>Horarios disponibles:</strong> <span id="ruta-horarios"></span></p>
+        <p class="precio">Precio: $<span id="ruta-precio"></span> COP</p>
+    </div>
+    <!-- Formulario de Reserva -->
+    <h2>Formulario de Reserva</h2>
+    <form id="reserva-form">
+        <div class="form-group">
+            <label for="nombre">Nombre completo</label>
+            <input type="text" id="nombre" name="nombreCliente" placeholder="Tu nombre completo" required>
+        </div>
+        <div class="form-group">
+            <label for="email">Correo electrónico</label>
+            <input type="email" id="email" name="email" placeholder="Tu correo electrónico" required>
+        </div>
+        <div class="form-group">
+            <label for="telefono">Teléfono</label>
+            <input type="tel" id="telefono" name="cedula" placeholder="Tu número de teléfono" required>
+        </div>
+        <div class="form-group">
+            <label for="personas">Número de personas</label>
+            <input type="number" id="personas" name="personas" min="1" value="1" required>
+        </div>
+        <div class="form-group">
+            <label for="horario">Horario (Ingresa el número correspondiente)</label>
+            <input type="number" id="horario" name="horario" placeholder="Ej: 1" required>
+        </div>
+        <div class="form-group">
+            <label for="ruta">Selecciona la Ruta</label>
+            <select id="ruta" name="ruta" required>
+                <option value="">Selecciona una ruta</option>
+                <option value="Ruta1">Tour del amor</option>
+                <option value="Ruta2">La herrera</option>
+                <option value="Ruta3">salto del angel</option>
+            </select>
+        </div>
+        <button type="submit" class="btn-reservar">CONFIRMAR RESERVA</button>
+    </form>
+</div>
+<!-- Modal de confirmación -->
+<div id="modal" class="modal">
+    <div class="modal-content">
+        <h2>¡Confirmación exitosa!</h2>
+        <p id="reserva-info"></p>
+        <button class="close-btn" id="close-modal">Cerrar</button>
+    </div>
+</div>
+<script>
+    document.getElementById("reserva-form").addEventListener("submit", function(event) {
+        event.preventDefault();
+        const nombre = document.getElementById("nombre").value;
+        const telefono = document.getElementById("telefono").value;
+        const personas = document.getElementById("personas").value;
+        const horarioIngresado = document.getElementById("horario").value;
+        const rutaSeleccionada = document.getElementById("ruta").value;
+
+        const reserva = {
+            nombreCliente: nombre,
+            cedula: telefono,
+            fechaReserva: new Date().toISOString().split("T")[0],
+            ruta: rutaSeleccionada,
+            estado: "Pendiente"
+        };
+
+        fetch("/reserva", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(reserva)
+        }).then(response => {
+            if (response.ok) {
+                const reservaInfo = `
+                    Ruta: ${reserva.ruta}<br>
+                    Nombre: ${nombre}<br>
+                    Teléfono: ${telefono}<br>
+                    Personas: ${personas}<br>
+                    Horario: ${horarioIngresado}
+                `;
+                document.getElementById("reserva-info").innerHTML = reservaInfo;
+                document.getElementById("modal").style.display = "flex";
+                document.getElementById("reserva-form").reset();
+            } else {
+                alert("Error al realizar la reserva. Intenta de nuevo.");
+            }
+        }).catch(error => {
+            console.error("Error al enviar la reserva:", error);
+            alert("Hubo un error al procesar la reserva.");
+        });
+    });
+
+    document.getElementById("close-modal").addEventListener("click", function() {
+        document.getElementById("modal").style.display = "none";
+    });
+</script>
+</body>
+</html>

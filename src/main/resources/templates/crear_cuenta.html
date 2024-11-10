@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crear Cuenta</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #F2EFE3;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .contenedor-registro {
+            background-color: #E3D4A6;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+        }
+        h1 {
+            font-size: 2.5rem;
+            color: #4A3C1E;
+            margin-bottom: 20px;
+            font-family: 'Georgia', serif;
+        }
+        input[type="text"], input[type="password"] {
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #C5B490;
+            border-radius: 5px;
+            font-size: 1rem;
+            width: 100%;
+        }
+        button {
+            background-color: #795548;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 5px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 20px;
+        }
+        .error-message {
+            color: red;
+            display: none;
+            margin-top: 10px;
+        }
+        .success-message {
+            color: green;
+            display: none;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+<div class="contenedor-registro">
+    <h1>Crear Cuenta</h1>
+    <form id="registerForm">
+        <input type="text" id="username" name="username" placeholder="Nombre de usuario" required>
+        <input type="password" id="password" name="password" placeholder="Contraseña" required>
+        <select id="rol" name="rol">
+            <option value="ADMINISTRADOR">Administrador</option>
+            <option value="AUXILIAR">Auxiliar</option>
+            <option value="USUARIO">Usuario</option>
+        </select>
+        <button type="submit">Registrarse</button>
+        <p class="error-message" id="errorMessage">El usuario ya existe</p>
+        <p class="success-message" id="successMessage">¡Registro exitoso!</p>
+    </form>
+</div>
+<script>
+    document.getElementById('registerForm').addEventListener('submit', async function(event) {
+        event.preventDefault();
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+        const rol = document.getElementById('rol').value;
+
+        const response = await fetch('/Usuarios/register', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: new URLSearchParams({ username, password, rol })
+        });
+
+        if (response.ok) {
+            document.getElementById('successMessage').style.display = 'block';
+            document.getElementById('errorMessage').style.display = 'none';
+        } else {
+            document.getElementById('errorMessage').style.display = 'block';
+            document.getElementById('successMessage').style.display = 'none';
+        }
+    });
+</script>
+</body>
+</html>

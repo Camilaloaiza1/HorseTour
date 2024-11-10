@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tour del Amor</title>
+    <link rel="icon" href="logoApp.png" type="image/x-icon">
+    <link rel="shortcut icon" href="logoApp.png" type="image/x-icon">
+
+    <style>
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            display: flex;
+            margin: 40px auto;
+            max-width: 1200px;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        .info {
+            flex: 70%;
+            padding: 20px;
+        }
+
+        .reserva {
+            flex: 30%;
+            background-color: #fafafa;
+            padding: 20px;
+            border-left: 1px solid #e0e0e0;
+        }
+
+        .btn-seleccionar {
+            background-color: #4A3C1E;
+            color: white;
+            border: none;
+            padding: 15px;
+            cursor: pointer;
+            font-size: 18px;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-seleccionar:hover {
+            background-color: #FF8C00;
+        }
+
+        h1, h2, h3 {
+            color: #333;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        ul li {
+            margin-bottom: 10px;
+        }
+
+        @media screen and (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                padding: 10px;
+                margin: 20px;
+            }
+
+            .info, .reserva {
+                flex: 100%;
+                padding: 10px;
+            }
+
+            .btn-seleccionar {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="info">
+        <h1>Detalles de la Ruta: Tour del Amor</h1>
+        <h2>Duración: 1.5 horas</h2>
+        <p>Dificultad: Fácil</p>
+        <h3>Descripción:</h3>
+        <p>Un recorrido romántico para parejas que deseen disfrutar de un paseo tranquilo con hermosas vistas panorámicas.</p>
+        <h3>Incluye:</h3>
+        <ul>
+            <li>Guía especializado</li>
+            <li>Caballo equipado</li>
+            <li>Refrigerio</li>
+        </ul>
+        <h3>Horarios:</h3>
+        <p>10:00 am, 2:00 pm, 6:00 pm</p>
+    </div>
+
+    <div class="reserva">
+        <h2>Precio: $90.000 COP por persona</h2>
+        <p>Disponibilidad: Fines de semana</p>
+        <button class="btn-seleccionar" onclick="seleccionar('Tour del Amor', 90000, '1.5 horas', 'Fácil', 'Un recorrido romántico para parejas.', ['Guía especializado', 'Caballo equipado', 'Refrigerio'], '10:00 am, 2:00 pm, 6:00 pm')">SELECCIONAR</button>
+    </div>
+</div>
+
+<script>
+function seleccionar(nombre, precio, duracion, dificultad, descripcion, incluye, horarios) {
+    const rutaInfo = {
+        nombre: nombre,
+        duracion: duracion,
+        dificultad: dificultad,
+        descripcion: descripcion,
+        incluye: incluye,
+        horarios: horarios,
+        precio: precio
+    };
+    localStorage.setItem("rutaSeleccionada", JSON.stringify(rutaInfo));
+    window.location.href = "reservar";
+}
+</script>
+
+</body>
+</html>

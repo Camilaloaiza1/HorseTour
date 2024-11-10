@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRUD de Rutas - La herrera</title>
+    <link rel="icon" href="logoApp.png" type="image/x-icon">
+    <link rel="shortcut icon" href="logoApp.png" type="image/x-icon">
+
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #FAF3E0;
+            margin: 0;
+            padding: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            max-width: 1000px;
+            width: 100%;
+            background-color: #FFF7E1;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .route-list {
+            margin-top: 20px;
+        }
+
+        .route {
+            background-color: #FFF3C1;
+            margin-bottom: 15px;
+            padding: 15px;
+            border-radius: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .route-details {
+            flex: 1;
+        }
+
+        .route-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            padding: 10px 15px;
+            font-size: 14px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .btn-add {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .btn-edit {
+            background-color: #FF8B3D;
+            color: white;
+        }
+
+        .btn-delete {
+            background-color: #FF6B6B;
+            color: white;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+        }
+
+        #routeForm {
+            display: block; /* Formulario siempre visible */
+            background-color: #FFEDD3;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        #routeForm label, #routeForm input, #routeForm textarea {
+            display: block;
+            width: 100%;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>CRUD de Rutas</h1>
+
+    <!-- Formulario de creación/edición de rutas -->
+    <div id="routeForm">
+        <label for="nombre">Nombre de la Ruta:</label>
+        <input type="text" id="nombre" placeholder="Salto del Ángel">
+
+        <label for="duracion">Duración:</label>
+        <input type="text" id="duracion" placeholder="2 horas">
+
+        <label for="dificultad">Dificultad:</label>
+        <input type="text" id="dificultad" placeholder="Media">
+
+        <label for="descripcion">Descripción:</label>
+        <textarea id="descripcion" placeholder="Descripción de la ruta..."></textarea>
+
+        <label for="incluye">Incluye:</label>
+        <input type="text" id="incluye" placeholder="Guía especializado, Caballo equipado, Refrigerio">
+
+        <label for="horarios">Horarios:</label>
+        <input type="text" id="horarios" placeholder="8:00 am, 12:00 pm, 4:00 pm">
+
+        <label for="precio">Precio (COP):</label>
+        <input type="number" id="precio" placeholder="120000">
+
+        <button class="btn btn-add" onclick="saveRoute()">Guardar</button>
+    </div>
+
+    <!-- Lista de rutas -->
+    <div class="route-list" id="routeList"></div>
+</div>
+
+<script>
+    let currentRouteId = null;
+
+    // Cargar rutas de la base de datos cuando la página se cargue
+    document.addEventListener('DOMContentLoaded', () => {
+        fetchRoutes();
+    });
+
+    // Función para obtener rutas desde la base de datos
+    function fetchRoutes() {
+        fetch('/rutas')  // Asumiendo que el backend está disponible en esta URL
+            .then(response => response.json())
+            .then(routes => {
+                routes.forEach(route => addRouteToList(route)); // Mostrar rutas en la interfaz
+            })
+            .catch(error => {
+                console.error('Error al cargar las rutas:', error);
+            });
+    }
+
+    // Función para guardar una nueva ruta
+    function saveRoute() {
+        const ruta = {
+            nombre: document.getElementById('nombre').value,
+            duracion: document.getElementById('duracion').value,
+            dificultad: document.getElementById('dificultad').value,
+            descripcion: document.getElementById('descripcion').value,
+            incluye: document.getElementById('incluye').value,
+            horarios: document.getElementById('horarios').value,
+            precio: parseInt(document.getElementById('precio').value)
+        };
+
+        if (currentRouteId === null) {
+            // Crear una nueva ruta
+            fetch('/rutas', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(ruta)
+            })
+                .then(response => response.json())
+                .then(savedRoute => {
+                    addRouteToList(savedRoute); // Añadir la ruta recién guardada a la lista
+                    clearForm(); // Limpiar el formulario
+                })
+                .catch(error => {
+                    console.error('Error al guardar la ruta:', error);
+                });
+        } else {
+            // Editar una ruta existente
+            fetch(`/rutas/${currentRouteId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(ruta)
+            })
+                .then(response => response.json())
+                .then(updatedRoute => {
+                    updateRouteInList(updatedRoute); // Actualizar la ruta en la lista
+                    clearForm(); // Limpiar el formulario
+                    currentRouteId = null; // Resetear el ID de la ruta actual
+                })
+                .catch(error => {
+                    console.error('Error al editar la ruta:', error);
+                });
+        }
+    }
+
+    // Función para agregar la ruta a la lista de la interfaz
+    function addRouteToList(ruta) {
+        const routeList = document.getElementById('routeList');
+
+        // Crear el contenedor de la ruta
+        const routeItem = document.createElement('div');
+        routeItem.className = 'route';
+        routeItem.id = `route-${ruta.id}`;
+
+        // Detalles de la ruta
+        const routeDetails = document.createElement('div');
+        routeDetails.className = 'route-details';
+        routeDetails.innerHTML = `
+      <h3>${ruta.nombre}</h3>
+      <p><strong>Duración:</strong> ${ruta.duracion}</p>
+      <p><strong>Dificultad:</strong> ${ruta.dificultad}</p>
+      <p><strong>Descripción:</strong> ${ruta.descripcion}</p>
+      <p><strong>Incluye:</strong> ${ruta.incluye}</p>
+      <p><strong>Horarios:</strong> ${ruta.horarios}</p>
+      <p><strong>Precio:</strong> COP ${ruta.precio}</p>
+    `;
+
+        const routeActions = document.createElement('div');
+        routeActions.className = 'route-actions';
+
+        // Botón de editar
+        const editButton = document.createElement('button');
+        editButton.className = 'btn btn-edit';
+        editButton.innerHTML = 'Editar';
+        editButton.onclick = () => editRoute(ruta);
+
+        // Botón de eliminar
+        const deleteButton = document.createElement('button');
+        deleteButton.className = 'btn btn-delete';
+        deleteButton.innerHTML = 'Eliminar';
+        deleteButton.onclick = () => deleteRoute(ruta.id);
+
+        routeActions.appendChild(editButton);
+        routeActions.appendChild(deleteButton);
+
+        // Añadir elementos al contenedor
+        routeItem.appendChild(routeDetails);
+        routeItem.appendChild(routeActions);
+
+        // Agregar la ruta a la lista
+        routeList.appendChild(routeItem);
+    }
+
+    // Función para actualizar una ruta en la lista después de editar
+    function updateRouteInList(ruta) {
+        const routeItem = document.getElementById(`route-${ruta.id}`);
+        routeItem.querySelector('.route-details').innerHTML = `
+      <h3>${ruta.nombre}</h3>
+      <p><strong>Duración:</strong> ${ruta.duracion}</p>
+      <p><strong>Dificultad:</strong> ${ruta.dificultad}</p>
+      <p><strong>Descripción:</strong> ${ruta.descripcion}</p>
+      <p><strong>Incluye:</strong> ${ruta.incluye}</p>
+      <p><strong>Horarios:</strong> ${ruta.horarios}</p>
+      <p><strong>Precio:</strong> COP ${ruta.precio}</p>
+    `;
+    }
+
+    // Función para eliminar una ruta
+    function deleteRoute(routeId) {
+        fetch(`/rutas/${routeId}`, {
+            method: 'DELETE'
+        })
+            .then(() => {
+                const routeItem = document.getElementById(`route-${routeId}`);
+                routeItem.remove(); // Eliminar la ruta de la lista visual
+            })
+            .catch(error => {
+                console.error('Error al eliminar la ruta:', error);
+            });
+    }
+
+    // Función para llenar el formulario con los datos de una ruta (para editar)
+    function editRoute(ruta) {
+        document.getElementById('nombre').value = ruta.nombre;
+        document.getElementById('duracion').value = ruta.duracion;
+        document.getElementById('dificultad').value = ruta.dificultad;
+        document.getElementById('descripcion').value = ruta.descripcion;
+        document.getElementById('incluye').value = ruta.incluye;
+        document.getElementById('horarios').value = ruta.horarios;
+        document.getElementById('precio').value = ruta.precio;
+        currentRouteId = ruta.id;
+    }
+
+    // Limpiar el formulario
+    function clearForm() {
+        document.getElementById('routeForm').reset();
+    }
+</script>
+
+</body>
+</html>

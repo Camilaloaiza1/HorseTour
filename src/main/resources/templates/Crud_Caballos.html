@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CRUD de Caballos - Salto del Ángel</title>
+  <link rel="icon" href="logoApp.png" type="image/x-icon">
+  <link rel="shortcut icon" href="logoApp.png" type="image/x-icon">
+
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #FAF3E0;
+      margin: 0;
+      padding: 50px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      max-width: 1000px;
+      width: 100%;
+      background-color: #FFF7E1;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+
+    .horse-list {
+      margin-top: 20px;
+    }
+
+    .horse {
+      background-color: #FFF3C1;
+      margin-bottom: 15px;
+      padding: 15px;
+      border-radius: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .horse-details {
+      flex: 1;
+    }
+
+    .horse-actions {
+      display: flex;
+      gap: 10px;
+    }
+
+    .btn {
+      padding: 10px 15px;
+      font-size: 14px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s, transform 0.3s;
+    }
+
+    .btn-add {
+      background-color: #4CAF50;
+      color: white;
+    }
+
+    .btn-edit {
+      background-color: #FF8B3D;
+      color: white;
+    }
+
+    .btn-delete {
+      background-color: #FF6B6B;
+      color: white;
+    }
+
+    .btn:hover {
+      transform: translateY(-3px);
+    }
+
+    #horseForm {
+      display: block; /* Mantenido visible siempre */
+      background-color: #FFEDD3;
+      padding: 20px;
+      border-radius: 10px;
+      margin-top: 20px;
+    }
+
+    #horseForm label, #horseForm input, #horseForm textarea {
+      display: block;
+      width: 100%;
+      margin: 10px 0;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h1>CRUD de Caballos</h1>
+
+  <!-- Formulario de creación/edición de caballos -->
+  <div id="horseForm">
+    <label for="nombre">Nombre del Caballo:</label>
+    <input type="text" id="nombre" placeholder="Ej. Pura Sangre">
+
+    <label for="edad">Edad (años):</label>
+    <input type="number" id="edad" placeholder="Ej. 5">
+
+    <label for="raza">Raza:</label>
+    <input type="text" id="raza" placeholder="Ej. Pura Sangre">
+
+    <label for="descripcion">Descripción:</label>
+    <textarea id="descripcion" placeholder="Descripción del caballo..."></textarea>
+
+
+    <label for="precio">Precio (COP):</label>
+    <input type="number" id="precio" placeholder="Ej. 350000">
+
+    <button class="btn btn-add" onclick="saveHorse()">Guardar</button>
+    <button class="btn btn-delete" onclick="toggleForm()">Cancelar</button>
+  </div>
+
+  <!-- Lista de caballos -->
+  <div class="horse-list" id="horseList"></div>
+</div>
+
+<script>
+  let editIndex = null;
+  let horses = []; // Lista de caballos
+
+  function saveHorse() {
+    const caballo = {
+      nombre: document.getElementById('nombre').value,
+      edad: parseInt(document.getElementById('edad').value),
+      raza: document.getElementById('raza').value,
+      descripcion: document.getElementById('descripcion').value,
+      incluye: document.getElementById('incluye').value.split(',').map(item => item.trim()),
+      precio: parseInt(document.getElementById('precio').value)
+    };
+
+    const url = '/caballos'; // URL del controlador de Spring
+
+    const method = editIndex === null ? 'POST' : 'PUT';
+    const requestOptions = {
+      method: method,
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(caballo)
+    };
+
+    fetch(url, requestOptions)
+            .then(response => {
+              if (!response.ok) {
+                throw new Error('Error al guardar el caballo');
+              }
+              return response.json();
+            })
+            .then(data => {
+              if (editIndex === null) {
+                horses.push(data); // Agrega el nuevo caballo
+              } else {
+                horses[editIndex] = data; // Actualiza el caballo existente
+                editIndex = null;
+              }
+
+              // Limpiar el formulario después de guardar
+              clearForm();
+
+              renderHorses(); // Actualiza la lista de caballos
+            })
+            .catch(error => {
+              console.error('Error:', error);
+              alert('Modificado exitosamente.');
+            });
+  }
+
+  function clearForm() {
+    document.getElementById('nombre').value = '';
+    document.getElementById('edad').value = '';
+    document.getElementById('raza').value = '';
+    document.getElementById('descripcion').value = '';
+    document.getElementById('incluye').value = '';
+    document.getElementById('precio').value = '';
+  }
+
+  function renderHorses() {
+    const horseList = document.getElementById('horseList');
+    horseList.innerHTML = '';
+
+    horses.forEach((caballo, index) => {
+      const horseElement = document.createElement('div');
+      horseElement.classList.add('horse');
+
+      horseElement.innerHTML = `
+        <div class="horse-details">
+          <h3>${caballo.nombre}</h3>
+          <p><strong>Raza:</strong> ${caballo.raza}</p>
+          <p><strong>Edad:</strong> ${caballo.edad} años</p>
+          <p><strong>Incluye:</strong> ${caballo.incluye.join(', ')}</p>
+          <p><strong>Precio:</strong> $${caballo.precio} COP</p>
+        </div>
+        <div class="horse-actions">
+          <button class="btn btn-edit" onclick="editHorse(${index})">Editar</button>
+          <button class="btn btn-delete" onclick="deleteHorse(${index})">Eliminar</button>
+        </div>
+      `;
+
+      horseList.appendChild(horseElement);
+    });
+  }
+
+  function editHorse(index) {
+    const caballo = horses[index];
+    document.getElementById('nombre').value = caballo.nombre;
+    document.getElementById('edad').value = caballo.edad;
+    document.getElementById('raza').value = caballo.raza;
+    document.getElementById('descripcion').value = caballo.descripcion;
+    document.getElementById('incluye').value = caballo.incluye.join(', ');
+    document.getElementById('precio').value = caballo.precio;
+
+    editIndex = index;
+  }
+
+  function deleteHorse(index) {
+    const url = `/caballos/${horses[index].id}`;
+    fetch(url, { method: 'DELETE' })
+            .then(response => {
+              if (!response.ok) {
+                throw new Error('Error al eliminar el caballo');
+              }
+              horses.splice(index, 1);
+              renderHorses();
+            })
+            .catch(error => console.error('Error:', error));
+  }
+
+</script>
+
+</body>
+</html>

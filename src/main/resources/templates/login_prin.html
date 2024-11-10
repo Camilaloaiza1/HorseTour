@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio de Sesión - Administrador/Auxiliar</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f4e7;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .login-container {
+            background-color: #f3e0b5;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 350px;
+            text-align: center;
+        }
+        .login-container img {
+            width: 100px;
+            border-radius: 50%;
+        }
+        .login-container h2 {
+            font-size: 24px;
+            color: #5b3e14;
+        }
+        .login-container select {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            background-color: #fff;
+        }
+        .login-container input[type="text"],
+        .login-container input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        .login-container button {
+            background-color: #6b4c1f;
+            color: white;
+            padding: 10px;
+            width: 100%;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .login-container button:hover {
+            background-color: #8a5b26;
+        }
+        .login-container .social-login {
+            margin: 10px 0;
+        }
+        .login-container .social-login button {
+            width: 48%;
+            padding: 10px;
+            font-size: 14px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .login-container .google {
+            background-color: #db4a39;
+            color: white;
+        }
+        .login-container .facebook {
+            background-color: #3b5998;
+            color: white;
+        }
+        .login-container .register-link {
+            margin-top: 10px;
+            font-size: 14px;
+        }
+        .login-container .register-link a {
+            color: #5b3e14;
+            text-decoration: none;
+        }
+        .login-container .register-link a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <img src="logo.png" alt="Logo">
+        <h2>Iniciar Sesión</h2>
+        
+        <!-- Selector de rol -->
+        <form id="loginForm">
+            <select id="role" required>
+                <option value="" disabled selected>Selecciona tu rol</option>
+                <option value="admin">Administrador</option>
+                <option value="aux">Auxiliar</option>
+            </select>
+            
+            <input type="text" id="username" placeholder="Ingresa tu usuario" required>
+            <input type="password" id="password" placeholder="Ingresa tu contraseña" required>
+            <button type="submit">Iniciar Sesión</button>
+        </form>
+
+        <div class="social-login">
+            <button class="google">Google</button>
+            <button class="facebook">Facebook</button>
+        </div>
+
+        <div class="register-link">
+            ¿No tienes cuenta? <a href="#">Regístrate aquí</a><br>
+            ¿Olvidaste tu contraseña? <a href="#">Recuperar</a>
+        </div>
+    </div>
+
+    <script>
+        // Capturar el formulario
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault(); // Evita el comportamiento predeterminado del formulario
+
+            // Obtener el valor del rol seleccionado
+            var role = document.getElementById('role').value;
+            
+            // Verificar qué opción fue seleccionada y redirigir a la página correspondiente
+            if (role === 'admin') {
+                window.location.href = 'pagina_principal_admin.html'; // URL para el administrador
+            } else if (role === 'aux') {
+                window.location.href = 'pagina_principal_auxiliar.html'; // URL para el auxiliar
+            } else {
+                alert("Por favor, selecciona un rol válido.");
+            }
+        });
+    </script>
+</body>
+</html>

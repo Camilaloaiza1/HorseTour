@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> HorseTour</title>
+    <link rel="icon" href="logoApp.png" type="image/x-icon">
+    <link rel="shortcut icon" href="logoApp.png" type="image/x-icon">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #E3D4A6;
+            color: #333;
+            line-height: 1.6;
+            padding: 1rem;
+        }
+
+        header {
+            background-color: #FFFAF0;
+            padding: 1rem 2rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            color: #4B3F2F;
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        nav ul li a {
+            color: #4B3F2F;
+            text-decoration: none; /* Sin subrayado */
+            font-weight: bold;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        nav ul li a:hover {
+            background-color: #DECBA4;
+            color: #333;
+        }
+
+        .hero {
+            background-color: #FFF5E1;
+            padding: 2rem;
+            text-align: center;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .carousel {
+            display: flex;
+            position: relative;
+            max-width: 1200px;
+            margin: 0 auto;
+            overflow: hidden;
+            border: 2px solid #CCC;
+            border-radius: 10px;
+        }
+
+        .carousel-track {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .carousel-item {
+            min-width: calc(100% / 3);
+            padding: 10px;
+            border-radius: 8px;
+            transition: transform 0.3s;
+        }
+
+        .carousel-item:hover {
+            transform: scale(1.05); /* Efecto de escala en hover */
+        }
+
+        .carousel-item img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .carousel-item a {
+            text-decoration: none; /* Sin subrayado en enlaces */
+            color: inherit;
+        }
+
+        .carousel-control {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            transform: translateY(-50%);
+        }
+
+        .carousel-control button {
+            background-color: rgba(0, 0, 0, 0.5);
+            border: none;
+            color: white;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 50%;
+            transition: background-color 0.3s;
+        }
+
+        .carousel-control button:hover {
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+
+        .tour-info, .horse-info {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s;
+        }
+
+        .tour-info:hover, .horse-info:hover {
+            background-color: #FFF5E1;
+        }
+
+        .tour-info h3, .horse-info h3 {
+            margin: 0;
+            font-size: 1.2rem;
+        }
+
+        .tour-info span, .horse-info span {
+            color: #4B3F2F;
+            font-weight: bold;
+        }
+
+        .carousel-indicators {
+            display: flex;
+            justify-content: center;
+            margin-top: 10px;
+        }
+
+        .carousel-indicators button {
+            border: none;
+            background-color: #ccc;
+            border-radius: 50%;
+            width: 10px;
+            height: 10px;
+            margin: 0 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .carousel-indicators button.active {
+            background-color: #333;
+        }
+
+        .horse-carousel {
+            margin-top: 3rem;
+        }
+
+        .tit_caballo {
+            text-align: center;
+            font-size: 2rem;
+            color: #4B3F2F;
+            margin: 1.5rem 0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">HorseTour</div>
+            <ul>
+                <li><a href="/inicio_sesion">Iniciar Sesión</a></li>
+                <li><a href="/carrito">Carrito</a></li>
+                <li><a href="/reservar">Reservar</a></li>
+                <li><a href="#">Contactar</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Contenido de la página -->
+</body>
+</html>
+
+    <main>
+        <!-- Primer carrusel de rutas -->
+        <section class="hero">
+            <div class="carousel">
+                <div class="carousel-track">
+                    <div class="carousel-item">
+                        <a href="/salto_angel">
+                            <img src="salto del angel.png" alt="Ruta 1">
+                            <div class="tour-info">
+                                <h3>Cabalgata al Salto del Ángel</h3>
+                                <span>Desde $239.000</span>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="carousel-item">
+                        <a href="/tour_delamor">
+                            <img src="tour del amor.png" alt="Ruta 2">
+                            <div class="tour-info">
+                                <h3>Tour del Amor</h3>
+                                <span>Desde $140.000</span>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="carousel-item">
+                        <a href="/La_herrera">
+                            <img src="la herrera.png" alt="Ruta 2">
+                            <div class="tour-info">
+                                <h3>Cabalgata por Vereda La Herrera</h3>
+                                <span>Desde $140.000</span>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="carousel-item">
+                        <a href="/ruta3">
+                            <img src="chorros blancos.png" alt="Ruta 3">
+                            <div class="tour-info">
+                                <h3>Cabalgata a Chorros Blancos</h3>
+                                <span>Desde $499.000</span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Botones de navegación -->
+                <div class="carousel-control">
+                    <button class="prev-btn">←</button>
+                    <button class="next-btn">→</button>
+                </div>
+            </div>
+
+            <!-- Indicadores de carrusel -->
+            <div class="carousel-indicators">
+                <button class="indicator active" data-slide="0"></button>
+                <button class="indicator" data-slide="1"></button>
+                <button class="indicator" data-slide="2"></button>
+            </div>
+        </section>
+
+        <h1 class="tit_caballo">SELECCIONA TU CABALLO</h1>
+
+        <!-- Segundo carrusel de caballos -->
+        <section class="horse-carousel">
+            <div class="carousel">
+                <div class="carousel-track">
+                    <div class="carousel-item">
+                        <a href="/pura_sangre">
+                            <img src="pura_sangre.png" alt="Caballo 1">
+                            <div class="horse-info">
+                                <h3>Caballo: Espíritu</h3>
+                                <span>Raza: Pura Sangre</span><br>
+                                <span>Precio: $350.000</span><br>
+                                <span>Edad: 5 años</span>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="carousel-item">
+                        <a href="/caballo2">
+                            <img src="andaluz.png" alt="Caballo 2">
+                            <div class="horse-info">
+                                <h3>Caballo: Tormenta</h3>
+                                <span>Raza: Andaluz</span><br>
+                                <span>Precio: $450.000</span><br>
+                                <span>Edad: 4 años</span>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="carousel-item">
+                        <a href="/caballo3">
+                            <img src="apaloosa.png" alt="Caballo 3">
+                            <div class="horse-info">
+                                <h3>Caballo: Relámpago</h3>
+                                <span>Raza: Appaloosa</span><br>
+                                <span>Precio: $500.000</span><br>
+                                <span>Edad: 6 años</span>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="carousel-item">
+                        <a href="/caballo4">
+                            <img src="pura_raza_ingles.png" alt="Caballo 4">
+                            <div class="horse-info">
+                                <h3>Caballo: Brisa</h3>
+                                <span>Raza: Pura Raza Inglés</span><br>
+                                <span>Precio: $400.000</span><br>
+                                <span>Edad: 6 años</span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Botones de navegación -->
+                <div class="carousel-control">
+                    <button class="prev-btn">←</button>
+                    <button class="next-btn">→</button>
+                </div>
+            </div>
+
+            <!-- Indicadores de carrusel -->
+            <div class="carousel-indicators">
+                <button class="indicator active" data-slide="0"></button>
+                <button class="indicator" data-slide="1"></button>
+                <button class="indicator" data-slide="2"></button>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        const carousels = document.querySelectorAll('.carousel');
+        carousels.forEach(initCarousel);
+
+        function initCarousel(carousel) {
+            const track = carousel.querySelector('.carousel-track');
+            const items = carousel.querySelectorAll('.carousel-item');
+            const prevBtn = carousel.querySelector('.prev-btn');
+            const nextBtn = carousel.querySelector('.next-btn');
+            const indicators = carousel.querySelectorAll('.indicator');
+            let currentIndex = 0;
+
+            function updateCarousel() {
+                const itemWidth = items[0].getBoundingClientRect().width;
+                track.style.transform = `translateX(-${currentIndex * itemWidth}px)`;
+                indicators.forEach((indicator, i) => {
+                    indicator.classList.toggle('active', i === currentIndex);
+                });
+            }
+
+            nextBtn.addEventListener('click', () => {
+                currentIndex = (currentIndex + 1) % items.length;
+                updateCarousel();
+            });
+
+            prevBtn.addEventListener('click', () => {
+                currentIndex = (currentIndex - 1 + items.length) % items.length;
+                updateCarousel();
+            });
+
+            indicators.forEach((indicator, index) => {
+                indicator.addEventListener('click', () => {
+                    currentIndex = index;
+                    updateCarousel();
+                });
+            });
+        }
+    </script>
+</body>
+</html>
